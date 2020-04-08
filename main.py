@@ -7,7 +7,8 @@ import nltk
 # nltk.download('averaged_perceptron_tagger')
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
-
+from nltk.chunk import conlltags2tree, tree2conlltags
+from pprint import pprint
 
 # NER: pick up candidate words/phrases
 # class NER:
@@ -30,6 +31,14 @@ def nltkDemo():
     ex = 'European authorities fined Google a record $5.1 billion on Wednesday for abusing its power in the mobile phone market and ordered the company to alter its practices'
     sentence = preprocess(ex)
     print(sentence)
+
+    pattern = 'NP: {<DT>?<JJ>*<NN>}'
+    cp = nltk.RegexpParser(pattern)
+    cs = cp.parse(sentence)
+    print(cs)
+
+    iob_tagged = tree2conlltags(cs)
+    pprint(iob_tagged)
 
 
 def wikipedia2VecDemo():
